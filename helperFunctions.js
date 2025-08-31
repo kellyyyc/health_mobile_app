@@ -17,7 +17,6 @@ export const addExercise = async (date, newExercise) => {
     const currentDateArray = exercises[date] ? exercises[date] : [];
     currentDateArray.push(newExercise);
     exercises[date] = currentDateArray;
-    console.log(newExercise);
     await AsyncStorage.setItem(EXERCISES_KEY, JSON.stringify(exercises));
     return 0;
   } catch (error) {

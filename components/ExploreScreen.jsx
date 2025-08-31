@@ -24,6 +24,7 @@ export default function ExploreScreen() {
 
 const styles = StyleSheet.create({
   box: {
+    marginTop: 20,
     paddingTop: 10,
     height: "50%",
     width: "90%",

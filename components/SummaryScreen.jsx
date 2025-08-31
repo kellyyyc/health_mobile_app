@@ -11,7 +11,7 @@ import { COLORS, FONTS } from "../styles/themes";
 
 export default function SummaryScreen() {
   const [marked, setMarked] = useState({});
-  const today = formatDate(new Date());
+  const [today, setToday] = useState(formatDate(new Date()));
 
   const theme = {
     backgroundColor: COLORS.lightBackground,
@@ -25,6 +25,7 @@ export default function SummaryScreen() {
     textDayFontSize: FONTS.medium,
     textMonthFontSize: FONTS.mediumLarge,
     textDayHeaderFontSize: FONTS.small,
+    dotStyle: { marginTop: -1, marginBottom: 3 },
   };
 
   const buildMarkedDates = (dates) => {
@@ -63,6 +64,16 @@ export default function SummaryScreen() {
       );
 
       const pills = buildMarkedDates(exerciseDays);
+      const currentDay = formatDate(new Date());
+      setToday(currentDay);
+      let todayMarked = pills[currentDay];
+      if (todayMarked) {
+        todayMarked["marked"] = true;
+        todayMarked["dotColor"] = COLORS.text;
+        pills[currentDay] = todayMarked;
+      } else {
+        pills[currentDay] = { dotColor: COLORS.text };
+      }
 
       setMarked(pills);
     } catch (e) {
@@ -89,7 +100,7 @@ export default function SummaryScreen() {
               markingType="period"
               markedDates={marked}
               firstDay={1}
-              hideExtraDays
+              hideExtraDays={true}
               futureScrollRange={0}
               maxDate={today}
               disableAllTouchEventsForDisabledDays={true}
@@ -104,6 +115,7 @@ export default function SummaryScreen() {
 
 const styles = StyleSheet.create({
   box: {
+    marginTop: 20,
     paddingTop: 10,
     height: "50%",
     width: "90%",
